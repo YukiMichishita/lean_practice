@@ -47,7 +47,11 @@ example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) :=
 
 -- 分配性
 example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) :=
-    have h₁ : p ∧ (q ∨ r) → (p ∧ q) ∨ (p ∧ r) := sorry
+    have h₁ : p ∧ (q ∨ r) → (p ∧ q) ∨ (p ∧ r) :=
+        fun (h : p ∧ (q ∨ r)) =>
+            h.right.elim
+                (fun(hq : q) => show (p ∧ q) ∨ (p ∧ r) from Or.inl ⟨h.left, hq⟩)
+                (fun(hr : r) => show (p ∧ q) ∨ (p ∧ r) from Or.inr ⟨h.left, hr⟩)
     have h₂ : (p ∧ q) ∨ (p ∧ r) → p ∧ (q ∨ r) := sorry
     Iff.intro h₁ h₂
 
