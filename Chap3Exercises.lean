@@ -149,5 +149,14 @@ example : p ∨ False ↔ p :=
     have l := fun h₁: p => Or.inl h₁
     Iff.intro r l
 
-example : p ∧ False ↔ False := sorry
-example : (p → q) → (¬q → ¬p) := sorry
+example : p ∧ False ↔ False :=
+    have h₁ :=
+        fun h : p ∧ False => h.right
+    have h₂ :=
+        fun h : False => h.elim
+    Iff.intro h₁ h₂
+
+example : (p → q) → (¬q → ¬p) :=
+    fun h₁ : p → q =>
+        fun h₂ : ¬q =>
+            fun h₃ : p => show False from absurd (h₁ h₃) h₂
