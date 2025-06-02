@@ -1,6 +1,13 @@
-variable (p q : Prop)
+variable (g : Nat → Nat → Nat)
+variable (hg : g 0 0 = 0)
 
-theorem t1 (h : p ∧ q) : q ∧ p :=
-  have hp : p := h.left
-  have hq : q := h.right
-  show q ∧ p from And.intro hq hp
+theorem gex1 : ∃ x, g x x = x := ⟨0, hg⟩
+theorem gex2 : ∃ x, g x 0 = x := ⟨0, hg⟩
+theorem gex3 : ∃ x, g 0 0 = x := ⟨0, hg⟩
+theorem gex4 : ∃ x, g x x = 0 := ⟨0, hg⟩
+
+set_option pp.explicit true  -- 暗黙の引数を表示する
+#print gex1
+#print gex2
+#print gex3
+#print gex4
